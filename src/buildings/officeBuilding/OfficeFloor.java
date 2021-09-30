@@ -5,7 +5,9 @@ import buildings.Space;
 import buildings.dwelling.Flat;
 import exceptions.SpaceIndexOutOfBoundsException;
 
-public class OfficeFloor extends Office implements Floor, Cloneable {
+import java.io.Serializable;
+
+public class OfficeFloor extends Office implements Floor, Cloneable, Serializable {
     private int floorOfficeCount;
     private Space[] offices;
 

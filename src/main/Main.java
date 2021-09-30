@@ -2,8 +2,9 @@ package main;
 
 import buildings.*;
 import buildings.dwelling.*;
+import buildings.dwelling.hotel.Hotel;
+import buildings.dwelling.hotel.HotelFloor;
 import buildings.officeBuilding.*;
-import myList.MyList;
 
 import java.io.*;
 
@@ -11,23 +12,47 @@ import java.io.*;
 public class Main {
     public static void main(String[] args) throws CloneNotSupportedException, IOException {
 
-        Space firstFlat = new Flat(1143, 3);
+        Space firstFlat = new Flat(1, 3);
         Space secondFlat = new Flat(34, 1);
-        Space thirdOffice = new Office(231, 12);
-        Space fourthOffice = new Office(1444, 4);
+        Space thirdOffice = new Office(1, 12);
+        Space fourthOffice = new Office(34, 4);
 
 
         Floor firstFloor = new DwellingFloor(new Space[]{firstFlat, fourthOffice});
-        Floor secondFloor = new OfficeFloor(new Space[]{secondFlat, thirdOffice});
 
-        Building fBuilding = new OfficeBuilding(new Floor[]{firstFloor, secondFloor});
-        Building sBuilding = new Dwelling(new Floor[]{secondFloor});
 
-        try (FileOutputStream fos = new FileOutputStream("test.txt")) {
-            Buildings.outputBuilding(fBuilding, fos);
+        //Building fBuilding = new OfficeBuilding(new Floor[]{firstFloor, secondFloor});
+
+        HotelFloor secondFloor = new HotelFloor(new Space[]{fourthOffice, thirdOffice});
+        HotelFloor hotelFloor = new HotelFloor(new Space[]{firstFlat, secondFlat});
+        hotelFloor.setStarCount(2);
+        secondFloor.setStarCount(3);
+
+        //System.out.println(hotelFloor.toString());
+        Hotel hotelBuilding = new Hotel(new Floor[]{secondFloor, hotelFloor, firstFloor});
+        System.out.println(hotelBuilding.toString());
+
+
+
+
+
+
+        /*try (FileOutputStream fos = new FileOutputStream("building.bin")) {
+            Buildings.serializeBuilding(fBuilding, fos);
         } catch (IOException exception) {
             System.out.println("Error");
         }
+
+        try (FileInputStream fis = new FileInputStream("building.bin")) {
+            Building readBuilding = Buildings.deserializeBuilding(fis);
+            System.out.println(readBuilding.toString());
+        } catch (IOException exception) {
+            System.out.println("Error");
+        } catch (ClassNotFoundException exception) {
+            System.out.println("Error");
+        }*/
+
+
 
 
 

@@ -7,7 +7,9 @@ import buildings.dwelling.Dwelling;
 import buildings.dwelling.Flat;
 import exceptions.FloorIndexOutOfBoundsException;
 
-public class OfficeBuilding extends OfficeFloor implements Building, Cloneable {
+import java.io.Serializable;
+
+public class OfficeBuilding extends OfficeFloor implements Building, Cloneable, Serializable {
     int floorCount;
     int[] floorOffices;
     //MyLinkedList<OfficeFloor> officeBuildingFloors;

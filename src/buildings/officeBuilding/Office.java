@@ -4,9 +4,10 @@ import buildings.Space;
 import exceptions.InvalidRoomsCountException;
 import exceptions.InvalidSpaceAreaException;
 
+import java.io.Serializable;
 import java.util.Objects;
 
-public class Office implements Space, Cloneable {
+public class Office implements Space, Cloneable, Serializable {
     private int square;
     private int roomCount;
 

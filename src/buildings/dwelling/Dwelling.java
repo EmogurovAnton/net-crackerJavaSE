@@ -5,11 +5,18 @@ import buildings.Floor;
 import buildings.Space;
 import exceptions.FloorIndexOutOfBoundsException;
 
-public class Dwelling extends DwellingFloor implements Building, Cloneable {
+import java.io.Serializable;
+
+public class Dwelling extends DwellingFloor implements Building, Cloneable, Serializable {
 
     private int dwellingFloorCount;
     private int[] dwellingFloorFlatCount;
     private Floor[] dwellingFloors;
+
+    public Dwelling() {
+    }
+
+    ;
 
     public Dwelling(int dwellingFloorCount, int[] dwellingFloorFlatCount) {
         this.dwellingFloorCount = dwellingFloorCount;

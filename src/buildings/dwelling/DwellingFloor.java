@@ -4,7 +4,9 @@ import buildings.Floor;
 import buildings.Space;
 import exceptions.SpaceIndexOutOfBoundsException;
 
-public class DwellingFloor extends Flat implements Floor, Cloneable {
+import java.io.Serializable;
+
+public class DwellingFloor extends Flat implements Floor, Cloneable, Serializable {
     private int flatCount;
     private Space flats[];
 

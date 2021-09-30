@@ -31,7 +31,7 @@ public class Buildings {
         String buildingInfo = getBuildingInfo(building);
         byte[] buffer = buildingInfo.getBytes(StandardCharsets.UTF_8);
 
-        for(byte eachByte : buffer){
+        for (byte eachByte : buffer) {
             out.write(eachByte);
         }
     }
@@ -43,6 +43,18 @@ public class Buildings {
         String a = ByteBuffer.wrap(buff).getInt(3) + "";
 
         return a;
+    }
+
+    public static void serializeBuilding(Building building, OutputStream out) throws IOException {
+        ObjectOutputStream oos = new ObjectOutputStream(out);
+        oos.writeObject(building);
+        oos.close();
+    }
+
+    public static Building deserializeBuilding(InputStream in) throws IOException, ClassNotFoundException {
+        ObjectInputStream ois = new ObjectInputStream(in);
+        Building readBuilding = (Building) ois.readObject();
+        return readBuilding;
     }
 
 
