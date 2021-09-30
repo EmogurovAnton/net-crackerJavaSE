@@ -1,0 +1,13 @@
+#.idea
+.idea/misc.xml
+.idea/modules.xml
+.idea/uiDesigner.xml
+.idea/vcs.xml
+.idea/workspace.xml
+#out
+out
+#LabNET_2.iml
+LabNET_2.iml
+#Files
+test.txt
+
