@@ -23,6 +23,11 @@ public class DwellingFloor extends Flat implements Floor, Cloneable, Serializabl
     public DwellingFloor(int flatCount) {
         this.flatCount = flatCount;
         this.flats = new Flat[this.flatCount];
+
+        for (int i = 0; i < this.flatCount; i++) {
+            this.flats[i] = new Flat();
+        }
+
     }
 
 
@@ -89,7 +94,7 @@ public class DwellingFloor extends Flat implements Floor, Cloneable, Serializabl
         int futureFlatIndex = futureFlatNumber - 1;
 
         if (futureFlatNumber > this.flats.length) {
-            Space[] flats = new Flat[futureFlatNumber];
+            Space[] flats = new Space[futureFlatNumber];
             for (int i = 0; i < this.flats.length; i++) {
                 flats[i] = this.flats[i];
             }
@@ -176,7 +181,7 @@ public class DwellingFloor extends Flat implements Floor, Cloneable, Serializabl
 
     @Override
     public DwellingFloor clone() {
-        return (DwellingFloor)super.clone();
+        return (DwellingFloor) super.clone();
     }
 }
 

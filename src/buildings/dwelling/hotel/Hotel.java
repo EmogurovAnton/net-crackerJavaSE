@@ -65,4 +65,45 @@ public class Hotel extends Dwelling {
 
         return resultHotelInfo;
     }
+
+    @Override
+    public boolean equals(Object object) {
+        if (this == object) {
+            return true;
+        }
+
+        if (object == null || this.getClass() != object.getClass()) {
+            return false;
+        }
+
+        Hotel hotel = (Hotel) object;
+
+        boolean checkFloorCount = this.getBuildingFloorsCount() == hotel.getBuildingFloorsCount();
+        if (!checkFloorCount) return false;
+        boolean checkFloors = true;
+
+        for (int i = 0; i < this.getBuildingFloorsCount(); i++) {
+            HotelFloor currentFloor = (HotelFloor) this.getBuildingFloorByNumber(i + 1);
+            HotelFloor hotelFloor = (HotelFloor) hotel.getBuildingFloorByNumber(i + 1);
+
+            checkFloors = currentFloor.equals(hotelFloor);
+            if (!checkFloors) {
+                return false;
+            }
+        }
+
+        return checkFloorCount && checkFloors;
+    }
+
+    @Override
+    public int hashCode() {
+        int floorCount = this.getBuildingFloorsCount();
+        int hashCode = 0;
+
+        for(int i = 0; i < this.getBuildingFloorsCount(); i++){
+            hashCode = floorCount | this.getBuildingFloorByNumber(i + 1).hashCode();
+        }
+
+        return hashCode;
+    }
 }

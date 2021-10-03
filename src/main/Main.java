@@ -13,24 +13,43 @@ public class Main {
     public static void main(String[] args) throws CloneNotSupportedException, IOException {
 
         Space firstFlat = new Flat(1, 3);
-        Space secondFlat = new Flat(34, 1);
-        Space thirdOffice = new Office(1, 12);
+        Space secondFlat = new Flat(345, 1);
+        Space thirdOffice = new Flat(500, 3);
         Space fourthOffice = new Office(34, 4);
 
+        HotelFloor first = new HotelFloor(new Space[]{secondFlat, fourthOffice});
+        HotelFloor second = new HotelFloor(new Space[]{thirdOffice});
 
-        Floor firstFloor = new DwellingFloor(new Space[]{firstFlat, fourthOffice});
+        HotelFloor df = new HotelFloor(new Space[]{firstFlat, thirdOffice});
+        Hotel b = new Hotel(new Floor[]{df});
+        Hotel c = new Hotel(new Floor[]{first, df});
+
+        System.out.println(c.hashCode());
 
 
-        //Building fBuilding = new OfficeBuilding(new Floor[]{firstFloor, secondFloor});
+        /*try (FileOutputStream fos = new FileOutputStream("building.bin")){
+            Buildings.outputBuilding(fBuilding, fos);
+        }*/
 
-        HotelFloor secondFloor = new HotelFloor(new Space[]{fourthOffice, thirdOffice});
+
+        /*try(FileInputStream fis = new FileInputStream("building.bin")){
+            Building testBuilding = Buildings.inputBuilding(fis);
+            System.out.println(fBuilding.toString());
+            System.out.println(testBuilding.toString());
+        }*/
+
+
+
+
+
+        /*HotelFloor secondFloor = new HotelFloor(new Space[]{fourthOffice, thirdOffice});
         HotelFloor hotelFloor = new HotelFloor(new Space[]{firstFlat, secondFlat});
         hotelFloor.setStarCount(2);
         secondFloor.setStarCount(3);
 
         //System.out.println(hotelFloor.toString());
         Hotel hotelBuilding = new Hotel(new Floor[]{secondFloor, hotelFloor, firstFloor});
-        System.out.println(hotelBuilding.toString());
+        System.out.println(hotelBuilding.toString());*/
 
 
 

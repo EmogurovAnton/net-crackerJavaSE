@@ -22,9 +22,13 @@ public class OfficeFloor extends Office implements Floor, Cloneable, Serializabl
         this.offices = offices;
     }
 
-    public OfficeFloor(int floorOfficeCount, Space[] offices) {
+    public OfficeFloor(int floorOfficeCount) {
         this.floorOfficeCount = floorOfficeCount;
-        this.offices = offices;
+        this.offices = new Office[floorOfficeCount];
+
+        for (int i = 0; i < this.floorOfficeCount; i++) {
+            this.offices[i] = new Office();
+        }
     }
 
     public int getSpaceCount() {
@@ -90,7 +94,7 @@ public class OfficeFloor extends Office implements Floor, Cloneable, Serializabl
         int futureFlatIndex = futureFlatNumber - 1;
 
         if (futureFlatNumber > this.offices.length) {
-            Space[] flats = new Flat[futureFlatNumber];
+            Space[] flats = new Space[futureFlatNumber];
             for (int i = 0; i < this.offices.length; i++) {
                 flats[i] = this.offices[i];
             }

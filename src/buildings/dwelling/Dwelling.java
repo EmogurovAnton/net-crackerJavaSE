@@ -188,6 +188,11 @@ public class Dwelling extends DwellingFloor implements Building, Cloneable, Seri
         Dwelling dwelling = (Dwelling) object;
 
         boolean floorCountCheck = this.getBuildingFloorsCount() == dwelling.getBuildingFloorsCount();
+
+        if(!floorCountCheck){
+            return false;
+        }
+
         boolean floorCheck = true;
 
         for (int i = 0; i < this.getBuildingFloorsCount(); i++) {

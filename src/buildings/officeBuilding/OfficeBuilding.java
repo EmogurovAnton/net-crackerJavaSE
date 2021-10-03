@@ -19,7 +19,7 @@ public class OfficeBuilding extends OfficeFloor implements Building, Cloneable, 
         this.floorCount = 0;
     }
 
-    public OfficeBuilding(Floor[] officeFloors){
+    public OfficeBuilding(Floor[] officeFloors) {
         this.officeBuildingFloors = officeFloors;
     }
 
@@ -179,6 +179,9 @@ public class OfficeBuilding extends OfficeFloor implements Building, Cloneable, 
         OfficeBuilding officeBuilding = (OfficeBuilding) object;
 
         boolean floorCountCheck = this.getBuildingFloorsCount() == officeBuilding.getBuildingFloorsCount();
+
+        if (!floorCountCheck) return false;
+
         boolean floorCheck = true;
 
         for (int i = 0; i < this.getBuildingFloorsCount(); i++) {
@@ -205,7 +208,7 @@ public class OfficeBuilding extends OfficeFloor implements Building, Cloneable, 
     }
 
     @Override
-    public OfficeBuilding clone(){
+    public OfficeBuilding clone() {
         return (OfficeBuilding) super.clone();
     }
 
