@@ -17,14 +17,23 @@ public class Main {
         Space thirdOffice = new Flat(500, 3);
         Space fourthOffice = new Office(34, 4);
 
-        HotelFloor first = new HotelFloor(new Space[]{secondFlat, fourthOffice});
-        HotelFloor second = new HotelFloor(new Space[]{thirdOffice});
+        DwellingFloor first = new DwellingFloor(new Space[]{secondFlat, fourthOffice});
+        DwellingFloor second = new DwellingFloor(new Space[]{thirdOffice});
 
         HotelFloor df = new HotelFloor(new Space[]{firstFlat, thirdOffice});
-        Hotel b = new Hotel(new Floor[]{df});
-        Hotel c = new Hotel(new Floor[]{first, df});
+        Building building = new Dwelling(new Floor[]{first});
 
-        System.out.println(c.hashCode());
+
+        System.out.println(building.toString());
+
+        try (Reader in = new FileReader("test.txt")) {
+            Building tb = Buildings.readBuilding(in);
+            System.out.println(tb.toString());
+        } catch (IOException exception) {
+            System.out.println("Error");
+        }
+
+
 
 
         /*try (FileOutputStream fos = new FileOutputStream("building.bin")){

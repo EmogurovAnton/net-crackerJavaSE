@@ -52,14 +52,50 @@ public class Buildings {
         return new Dwelling(floors);
     }
 
-   /* public static String inputBuilding(InputStream in) throws IOException {
-        DataInputStream dis = new DataInputStream(in);
-        byte[] buff = dis.readAllBytes();
+    public static void writeBuilding(Building building, Writer out) throws IOException {
+        int floorsCount = building.getBuildingFloorsCount();
+        out.write(Integer.toString(floorsCount));
+        out.write(" ");
 
-        String a = ByteBuffer.wrap(buff).getInt(3) + "";
+        for (int i = 0; i < building.getBuildingFloorsCount(); i++) {
+            Floor currentFloor = building.getBuildingFloorByNumber(i + 1);
+            out.write(Integer.toString(currentFloor.getSpaceCount()));
+            out.write(" ");
+            for (int j = 0; j < currentFloor.getSpaceCount(); j++) {
+                Space currentSpace = currentFloor.getSpaceByNumber(j + 1);
+                int square = currentSpace.getSquare();
+                int roomCount = currentSpace.getRoomCount();
+                out.write(Integer.toString(square));
+                out.write(" ");
+                out.write(Integer.toString(roomCount));
+                out.write(" ");
+            }
+        }
+    }
 
-        return a;
-    }*/
+    public static Building readBuilding(Reader in) throws IOException {
+        StreamTokenizer st = new StreamTokenizer(in);
+        st.nextToken();
+        int floorCount = (int) st.nval;
+        Floor[] floors = new Floor[floorCount];
+
+        for (int i = 0; i < floorCount; i++) {
+            st.nextToken();
+            int currentFloorSpaceCount = (int) st.nval;
+            Space[] spaces = new Space[currentFloorSpaceCount];
+            for (int j = 0; j < currentFloorSpaceCount; j++) {
+                st.nextToken();
+                int square = (int) st.nval;
+                st.nextToken();
+                int roomCount = (int) st.nval;
+                spaces[j] = new Flat(square, roomCount);
+            }
+            floors[i] = new DwellingFloor(spaces);
+        }
+
+        return new Dwelling(floors);
+    }
+
 
     public static void serializeBuilding(Building building, OutputStream out) throws IOException {
         ObjectOutputStream oos = new ObjectOutputStream(out);
