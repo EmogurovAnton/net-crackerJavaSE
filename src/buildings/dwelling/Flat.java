@@ -92,11 +92,18 @@ public class Flat implements Space, Cloneable, Serializable {
     }
 
     @Override
-    public Flat clone()  {
+    public Flat clone() {
         try {
             return (Flat) super.clone();
         } catch (CloneNotSupportedException exception) {
             throw new InternalError();
         }
+    }
+
+    @Override
+    public int compareTo(Space o) {
+        if (this.getSquare() < o.getSquare()) return -1;
+        if (this.getSquare() > o.getSquare()) return 1;
+        return 0;
     }
 }

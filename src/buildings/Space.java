@@ -1,6 +1,6 @@
 package buildings;
 
-public interface Space {
+public interface Space extends Comparable<Space>{
     public int getRoomCount();
 
     public void setRoomCount(int roomCount);
@@ -12,4 +12,5 @@ public interface Space {
     public void showSpaceInformation();
 
     public Space clone();
+
 }

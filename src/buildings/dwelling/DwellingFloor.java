@@ -1,6 +1,8 @@
 package buildings.dwelling;
 
+import buildings.Collection;
 import buildings.Floor;
+import buildings.Iterator;
 import buildings.Space;
 import exceptions.SpaceIndexOutOfBoundsException;
 
@@ -182,6 +184,28 @@ public class DwellingFloor extends Flat implements Floor, Cloneable, Serializabl
     @Override
     public DwellingFloor clone() {
         return (DwellingFloor) super.clone();
+    }
+
+    @Override
+    public Iterator getIterator() {
+        return new SpaceIterator();
+    }
+
+    private class SpaceIterator implements Iterator {
+        int index;
+
+        @Override
+        public boolean hasNext() {
+            if (index < flats.length) {
+                return true;
+            }
+            return false;
+        }
+
+        @Override
+        public Object next() {
+            return flats[index++];
+        }
     }
 }
 

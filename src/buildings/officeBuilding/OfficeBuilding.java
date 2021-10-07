@@ -2,6 +2,7 @@ package buildings.officeBuilding;
 
 import buildings.Building;
 import buildings.Floor;
+import buildings.Iterator;
 import buildings.Space;
 import buildings.dwelling.Dwelling;
 import buildings.dwelling.Flat;
@@ -210,6 +211,28 @@ public class OfficeBuilding extends OfficeFloor implements Building, Cloneable, 
     @Override
     public OfficeBuilding clone() {
         return (OfficeBuilding) super.clone();
+    }
+
+    @Override
+    public Iterator getIterator() {
+        return new FloorIterator();
+    }
+
+    private class FloorIterator implements Iterator{
+        int index;
+
+        @Override
+        public boolean hasNext() {
+            if(index < officeBuildingFloors.length){
+                return true;
+            }
+            return false;
+        }
+
+        @Override
+        public Object next() {
+            return officeBuildingFloors[index++];
+        }
     }
 
     /*public OfficeBuilding(MyLinkedList<OfficeFloor> officeBuildingFloors) {

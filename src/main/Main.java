@@ -17,8 +17,21 @@ public class Main {
         Space thirdOffice = new Flat(500, 3);
         Space fourthOffice = new Office(34, 4);
 
-        DwellingFloor first = new DwellingFloor(new Space[]{secondFlat, fourthOffice});
-        DwellingFloor second = new DwellingFloor(new Space[]{thirdOffice});
+        OfficeFloor first = new OfficeFloor(new Space[]{secondFlat, fourthOffice, thirdOffice});
+        DwellingFloor dw = new DwellingFloor(new Space[]{firstFlat, secondFlat, fourthOffice});
+
+        OfficeBuilding building = new OfficeBuilding(new Floor[]{first, dw});
+        Iterator iterator = building.getIterator();
+
+        while (iterator.hasNext()) {
+            System.out.println(iterator.next().toString());
+        }
+
+
+
+
+
+        /*DwellingFloor second = new DwellingFloor(new Space[]{thirdOffice});
 
         HotelFloor df = new HotelFloor(new Space[]{firstFlat, thirdOffice});
         Building building = new Dwelling(new Floor[]{first});
@@ -31,7 +44,7 @@ public class Main {
             System.out.println(tb.toString());
         } catch (IOException exception) {
             System.out.println("Error");
-        }
+        }*/
 
 
 

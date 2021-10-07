@@ -1,6 +1,8 @@
 package buildings.officeBuilding;
 
+import buildings.Collection;
 import buildings.Floor;
+import buildings.Iterator;
 import buildings.Space;
 import buildings.dwelling.Flat;
 import exceptions.SpaceIndexOutOfBoundsException;
@@ -181,6 +183,29 @@ public class OfficeFloor extends Office implements Floor, Cloneable, Serializabl
     @Override
     public OfficeFloor clone() {
         return (OfficeFloor) super.clone();
+    }
+
+    @Override
+    public Iterator getIterator() {
+        return new SpaceIterator();
+    }
+
+
+    private class SpaceIterator implements Iterator {
+        int index;
+
+        @Override
+        public boolean hasNext() {
+            if (index < offices.length) {
+                return true;
+            }
+            return false;
+        }
+
+        @Override
+        public Object next() {
+            return offices[index++];
+        }
     }
 
     /*public int getSpaceCount() {

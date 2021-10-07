@@ -30,4 +30,6 @@ public interface Building extends Floor {
     public void showBuildingInformation();
 
     public Building clone();
+
+    Iterator getIterator();
 }

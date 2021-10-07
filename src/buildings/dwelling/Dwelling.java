@@ -2,6 +2,7 @@ package buildings.dwelling;
 
 import buildings.Building;
 import buildings.Floor;
+import buildings.Iterator;
 import buildings.Space;
 import exceptions.FloorIndexOutOfBoundsException;
 
@@ -221,6 +222,28 @@ public class Dwelling extends DwellingFloor implements Building, Cloneable, Seri
     @Override
     public Dwelling clone() {
         return (Dwelling) super.clone();
+    }
+
+    @Override
+    public Iterator getIterator() {
+        return new FloorIterator();
+    }
+
+    private class FloorIterator implements Iterator{
+        int index;
+
+        @Override
+        public boolean hasNext() {
+            if(index < dwellingFloors.length){
+                return true;
+            }
+            return false;
+        }
+
+        @Override
+        public Object next() {
+            return dwellingFloors[index++];
+        }
     }
 
     /*public void showDwellingFlatsInformation(Space[] flats) {
