@@ -170,30 +170,4 @@ public class Buildings {
             }
         }
     }
-
-    public static void comparatorSortSpaces(Space[] spaces, Comparator<Space> comparator) {
-        for (int i = 0; i < spaces.length - 1; i++) {
-            for (int j = 0; j < spaces.length - i - 1; j++) {
-                if (comparator.compare(spaces[j], spaces[j + 1]) > 0) {
-                    Space tempSpace = spaces[j];
-                    spaces[j] = spaces[j + 1];
-                    spaces[j + 1] = tempSpace;
-                }
-            }
-        }
-    }
-
-    public static void comparatorSortFloor(Floor[] floors, Comparator<Floor> comparator) {
-        for (int i = 0; i < floors.length - 1; i++) {
-            for (int j = 0; j < floors.length - i - 1; j++) {
-                if (comparator.compare(floors[j], floors[j + 1]) > 0) {
-                    Floor tempFloor = floors[j];
-                    floors[j] = floors[j + 1];
-                    floors[j + 1] = tempFloor;
-                }
-            }
-        }
-    }
-
-
 }
