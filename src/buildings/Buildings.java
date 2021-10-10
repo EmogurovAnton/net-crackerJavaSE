@@ -5,13 +5,43 @@ import buildings.dwelling.DwellingFloor;
 import buildings.dwelling.Flat;
 
 import java.io.*;
-import java.nio.ByteBuffer;
-import java.nio.charset.StandardCharsets;
+import java.util.Comparator;
 
 
 public class Buildings {
 
+    private static BuildingFactory buildingFactory = new DwellingFactory();
 
+    private void setBuildingFactory(BuildingFactory buildingFactory) {
+        this.buildingFactory = buildingFactory;
+    }
+
+    public static Space createSpace(int square) {
+        return buildingFactory.createSpace(square);
+    }
+
+    public static Space createSpace(int square, int roomCount) {
+        return buildingFactory.createSpace(square, roomCount);
+    }
+
+    public static Floor createFloor(int spacesCount) {
+        return buildingFactory.createFloor(spacesCount);
+    }
+
+    public static Floor createFloor(Space[] spaces) {
+        return buildingFactory.createFloor(spaces);
+    }
+
+    public static Building createBuilding(int floorsCount, int[] spaceCount) {
+        return buildingFactory.createBuilding(floorsCount, spaceCount);
+    }
+
+    public static Building createBuilding(Floor[] floors) {
+        return buildingFactory.createBuilding(floors);
+    }
+
+
+    //Запись здания в байтовый поток
     public static void outputBuilding(Building building, OutputStream out) throws IOException {
         DataOutputStream dos = new DataOutputStream(out);
 
@@ -29,6 +59,7 @@ public class Buildings {
         out.close();
     }
 
+    //Чтение здания из байтового потока
     public static Building inputBuilding(InputStream in) throws IOException {
         DataInputStream dis = new DataInputStream(in);
 
@@ -38,20 +69,21 @@ public class Buildings {
         for (int i = 0; i < floorCount; i++) {
             int floorSpacesCount = dis.readInt();
             Space[] spaces = new Space[floorSpacesCount];
+
             for (int j = 0; j < floorSpacesCount; j++) {
                 int spaceSquare = dis.readInt();
                 int spaceRoomCount = dis.readInt();
 
-                Space space = new Flat(spaceSquare, spaceRoomCount);
-                spaces[j] = space;
+                spaces[j] = createSpace(spaceSquare, spaceRoomCount);
             }
-            floors[i] = new DwellingFloor(spaces);
+            floors[i] = createFloor(spaces);
         }
 
         dis.close();
-        return new Dwelling(floors);
+        return createBuilding(floors);
     }
 
+    //Запись здания в символьный поток
     public static void writeBuilding(Building building, Writer out) throws IOException {
         int floorsCount = building.getBuildingFloorsCount();
         out.write(Integer.toString(floorsCount));
@@ -73,6 +105,7 @@ public class Buildings {
         }
     }
 
+    //Чтение здание из символьного потока
     public static Building readBuilding(Reader in) throws IOException {
         StreamTokenizer st = new StreamTokenizer(in);
         st.nextToken();
@@ -88,21 +121,22 @@ public class Buildings {
                 int square = (int) st.nval;
                 st.nextToken();
                 int roomCount = (int) st.nval;
-                spaces[j] = new Flat(square, roomCount);
+                spaces[j] = createSpace(square, roomCount);
             }
-            floors[i] = new DwellingFloor(spaces);
+            floors[i] = createFloor(spaces);
         }
-
-        return new Dwelling(floors);
+        return createBuilding(floors);
     }
 
 
+    //Сериализация здания
     public static void serializeBuilding(Building building, OutputStream out) throws IOException {
         ObjectOutputStream oos = new ObjectOutputStream(out);
         oos.writeObject(building);
         oos.close();
     }
 
+    //Десериализация здания
     public static Building deserializeBuilding(InputStream in) throws IOException, ClassNotFoundException {
         ObjectInputStream ois = new ObjectInputStream(in);
         Building readBuilding = (Building) ois.readObject();
@@ -110,54 +144,56 @@ public class Buildings {
     }
 
 
-
-
-    /*public static String getBuildingInfo(Building building) {
-        String buildingInfo = building.getBuildingFloorsCount() + " ";
-
-        for (int i = 1; i <= building.getBuildingFloorsCount(); i++) {
-
-            int currentFloorSpaceCount = building.getBuildingFloorByNumber(i).getSpaceCount();
-            buildingInfo += currentFloorSpaceCount + " ";
-
-            for (int j = 1; j <= building.getBuildingFloorByNumber(i).getSpaceCount(); j++) {
-                int currentSpaceRoomCount = building.getBuildingFloorByNumber(i).getSpaceByNumber(j).getRoomCount();
-                double currentSpaceSquare = building.getBuildingFloorByNumber(i).getSpaceByNumber(j).getSquare();
-
-                buildingInfo += currentSpaceRoomCount + " " + currentSpaceSquare + " ";
-            }
-        }
-
-        return buildingInfo;
-    }*/
-
-
-
-
-
-    /*ByteArrayOutputStream baos = new ByteArrayOutputStream();
-        DataOutputStream dos = new DataOutputStream(baos);
-
-
-        DataOutputStream dos = new DataOutputStream(out);
-
-        try {
-            dos.writeInt(building.getBuildingFloorsCount());
-            for (int i = 0; i < building.getBuildingFloorsCount(); i++) {
-                Floor currentFloor = building.getBuildingFloorByNumber(i + 1);
-                dos.writeInt(currentFloor.getSpaceCount());
-                for (int j = 0; j < currentFloor.getSpaceCount(); j++) {
-                    Space currentSpace = currentFloor.getSpaceByNumber(j + 1);
-                    dos.writeInt(currentSpace.getRoomCount());
-                    dos.writeInt(currentSpace.getSquare());
+    //Сортировка по возрастанию с Comparable <T>
+    public static <T extends Comparable<T>> void sortRising(T[] objects) {
+        for (int i = 0; i < objects.length - 1; i++) {
+            for (int j = 0; j < objects.length - i - 1; j++) {
+                if (objects[j].compareTo(objects[j + 1]) > 0) {
+                    T tempObject = objects[j];
+                    objects[j] = objects[j + 1];
+                    objects[j + 1] = tempObject;
                 }
             }
-            out.write(baos.toByteArray());
-            baos.close();
-            dos.close();
-            out.close();
-        } catch (IOException exception) {
-            exception.getStackTrace();
-        }*/
+        }
+    }
+
+    //Сортировка с критерием через Comparator <T>
+    public static <T> void sortDecreasing(T[] objects, Comparator<T> comparator) {
+        for (int i = 0; i < objects.length - 1; i++) {
+            for (int j = 0; j < objects.length - i - 1; j++) {
+                if (comparator.compare(objects[j], objects[j + 1]) > 0) {
+                    T tempObject = objects[j];
+                    ;
+                    objects[j] = objects[j + 1];
+                    objects[j + 1] = tempObject;
+                }
+            }
+        }
+    }
+
+    public static void comparatorSortSpaces(Space[] spaces, Comparator<Space> comparator) {
+        for (int i = 0; i < spaces.length - 1; i++) {
+            for (int j = 0; j < spaces.length - i - 1; j++) {
+                if (comparator.compare(spaces[j], spaces[j + 1]) > 0) {
+                    Space tempSpace = spaces[j];
+                    spaces[j] = spaces[j + 1];
+                    spaces[j + 1] = tempSpace;
+                }
+            }
+        }
+    }
+
+    public static void comparatorSortFloor(Floor[] floors, Comparator<Floor> comparator) {
+        for (int i = 0; i < floors.length - 1; i++) {
+            for (int j = 0; j < floors.length - i - 1; j++) {
+                if (comparator.compare(floors[j], floors[j + 1]) > 0) {
+                    Floor tempFloor = floors[j];
+                    floors[j] = floors[j + 1];
+                    floors[j + 1] = tempFloor;
+                }
+            }
+        }
+    }
+
 
 }

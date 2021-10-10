@@ -10,7 +10,7 @@ import exceptions.FloorIndexOutOfBoundsException;
 
 import java.io.Serializable;
 
-public class OfficeBuilding extends OfficeFloor implements Building, Cloneable, Serializable {
+public class OfficeBuilding implements Building, Cloneable, Serializable {
     int floorCount;
     int[] floorOffices;
     //MyLinkedList<OfficeFloor> officeBuildingFloors;
@@ -18,6 +18,16 @@ public class OfficeBuilding extends OfficeFloor implements Building, Cloneable, 
 
     public OfficeBuilding() {
         this.floorCount = 0;
+    }
+
+    public OfficeBuilding(int officeBuildingFloorCount, int[] officeBuildingFloorOfficeCount) {
+        this.floorCount = officeBuildingFloorCount;
+        this.floorOffices = officeBuildingFloorOfficeCount;
+        this.officeBuildingFloors = new OfficeFloor[this.floorCount];
+
+        for (int i = 0; i < this.officeBuildingFloors.length; i++) {
+            this.officeBuildingFloors[i] = new OfficeFloor(officeBuildingFloorOfficeCount[i]);
+        }
     }
 
     public OfficeBuilding(Floor[] officeFloors) {
@@ -209,7 +219,7 @@ public class OfficeBuilding extends OfficeFloor implements Building, Cloneable, 
     }
 
     @Override
-    public OfficeBuilding clone() {
+    public OfficeBuilding clone() throws CloneNotSupportedException {
         return (OfficeBuilding) super.clone();
     }
 
@@ -218,12 +228,12 @@ public class OfficeBuilding extends OfficeFloor implements Building, Cloneable, 
         return new FloorIterator();
     }
 
-    private class FloorIterator implements Iterator{
+    private class FloorIterator implements Iterator {
         int index;
 
         @Override
         public boolean hasNext() {
-            if(index < officeBuildingFloors.length){
+            if (index < officeBuildingFloors.length) {
                 return true;
             }
             return false;

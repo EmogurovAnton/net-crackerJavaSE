@@ -2,11 +2,10 @@ package main;
 
 import buildings.*;
 import buildings.dwelling.*;
-import buildings.dwelling.hotel.Hotel;
-import buildings.dwelling.hotel.HotelFloor;
 import buildings.officeBuilding.*;
 
 import java.io.*;
+import java.util.Comparator;
 
 
 public class Main {
@@ -17,7 +16,55 @@ public class Main {
         Space thirdOffice = new Flat(500, 3);
         Space fourthOffice = new Office(34, 4);
 
-        OfficeFloor first = new OfficeFloor(new Space[]{secondFlat, fourthOffice, thirdOffice});
+
+        Space[] spaces = new Space[]{thirdOffice, fourthOffice, secondFlat, firstFlat};
+        Space[] spaces1 = new Space[]{firstFlat};
+        Space[] spaces2 = new Space[]{secondFlat, firstFlat};
+        Space[] spaces3 = new Space[]{thirdOffice, fourthOffice, secondFlat};
+
+
+        Floor first = new DwellingFloor(spaces);
+        Floor second = new DwellingFloor(spaces1);
+        Floor third = new DwellingFloor(spaces2);
+        Floor fourth = new DwellingFloor(spaces3);
+
+        Building test = new Dwelling(new Floor[]{first, fourth, third, second});
+
+        SpaceComparator spaceComparator = new SpaceComparator();
+        FloorComparator floorComparator = new FloorComparator();
+
+        System.out.println("Before");
+        System.out.println(test.toString());
+        System.out.println("After");
+        Buildings.sortDecreasing(test.getFloors(), floorComparator);
+        System.out.println(test.toString());
+
+        /*System.out.println("Before");
+        System.out.println(first.toString());
+        System.out.println("After");
+        Buildings.comparatorSortSpaces(first.getSpaces(), spaceComparator);
+        System.out.println(first.toString());*/
+
+
+
+/*        System.out.println("Before");
+        System.out.println(first.toString());
+        System.out.println("After");
+        Buildings.sortRising(first.getSpaces());
+        System.out.println(first.toString());*/
+
+        /*System.out.println("Before");
+        System.out.println(test.toString());
+        System.out.println("After");
+        Buildings.sortRising(test.getFloors());
+        System.out.println(test.toString());*/
+
+
+
+
+
+
+        /*OfficeFloor first = new OfficeFloor(new Space[]{secondFlat, fourthOffice, thirdOffice});
         DwellingFloor dw = new DwellingFloor(new Space[]{firstFlat, secondFlat, fourthOffice});
 
         OfficeBuilding building = new OfficeBuilding(new Floor[]{first, dw});
@@ -25,7 +72,7 @@ public class Main {
 
         while (iterator.hasNext()) {
             System.out.println(iterator.next().toString());
-        }
+        }*/
 
 
 

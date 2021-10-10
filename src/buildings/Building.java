@@ -1,6 +1,6 @@
 package buildings;
 
-public interface Building extends Floor {
+public interface Building  {
     public int getBuildingFloorsCount();
 
     public int getBuildingSpacesCount();
@@ -29,7 +29,7 @@ public interface Building extends Floor {
 
     public void showBuildingInformation();
 
-    public Building clone();
+    public Building clone() throws CloneNotSupportedException;
 
     Iterator getIterator();
 }

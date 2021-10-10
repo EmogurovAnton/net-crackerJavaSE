@@ -8,7 +8,7 @@ import exceptions.SpaceIndexOutOfBoundsException;
 
 import java.io.Serializable;
 
-public class DwellingFloor extends Flat implements Floor, Cloneable, Serializable {
+public class DwellingFloor implements Floor, Cloneable, Serializable {
     private int flatCount;
     private Space flats[];
 
@@ -182,13 +182,24 @@ public class DwellingFloor extends Flat implements Floor, Cloneable, Serializabl
     }
 
     @Override
-    public DwellingFloor clone() {
+    public DwellingFloor clone() throws CloneNotSupportedException{
         return (DwellingFloor) super.clone();
     }
 
     @Override
     public Iterator getIterator() {
         return new SpaceIterator();
+    }
+
+    @Override
+    public int compareTo(Floor o) {
+        if (this.getSpaceCount() == o.getSpaceCount()) {
+            return 0;
+        } else if (this.getSpaceCount() < o.getSpaceCount()) {
+            return -1;
+        } else {
+            return 1;
+        }
     }
 
     private class SpaceIterator implements Iterator {

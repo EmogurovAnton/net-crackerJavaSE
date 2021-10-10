@@ -6,6 +6,10 @@ import buildings.dwelling.Dwelling;
 
 public class Hotel extends Dwelling {
 
+    public Hotel(int hotelFloorCount, int[] hotelFloorSpaceCount) {
+        super(hotelFloorCount, hotelFloorSpaceCount);
+    }
+
     public Hotel(Floor[] hotelFloors) {
         super(hotelFloors);
     }
@@ -100,7 +104,7 @@ public class Hotel extends Dwelling {
         int floorCount = this.getBuildingFloorsCount();
         int hashCode = 0;
 
-        for(int i = 0; i < this.getBuildingFloorsCount(); i++){
+        for (int i = 0; i < this.getBuildingFloorsCount(); i++) {
             hashCode = floorCount | this.getBuildingFloorByNumber(i + 1).hashCode();
         }
 

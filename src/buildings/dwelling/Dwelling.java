@@ -8,7 +8,7 @@ import exceptions.FloorIndexOutOfBoundsException;
 
 import java.io.Serializable;
 
-public class Dwelling extends DwellingFloor implements Building, Cloneable, Serializable {
+public class Dwelling implements Building, Cloneable, Serializable {
 
     private int dwellingFloorCount;
     private int[] dwellingFloorFlatCount;
@@ -220,7 +220,7 @@ public class Dwelling extends DwellingFloor implements Building, Cloneable, Seri
     }
 
     @Override
-    public Dwelling clone() {
+    public Dwelling clone() throws CloneNotSupportedException{
         return (Dwelling) super.clone();
     }
 

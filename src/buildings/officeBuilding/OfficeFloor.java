@@ -9,7 +9,7 @@ import exceptions.SpaceIndexOutOfBoundsException;
 
 import java.io.Serializable;
 
-public class OfficeFloor extends Office implements Floor, Cloneable, Serializable {
+public class OfficeFloor implements Floor, Cloneable, Serializable {
     private int floorOfficeCount;
     private Space[] offices;
 
@@ -181,13 +181,24 @@ public class OfficeFloor extends Office implements Floor, Cloneable, Serializabl
     }
 
     @Override
-    public OfficeFloor clone() {
+    public OfficeFloor clone() throws CloneNotSupportedException {
         return (OfficeFloor) super.clone();
     }
 
     @Override
     public Iterator getIterator() {
         return new SpaceIterator();
+    }
+
+    @Override
+    public int compareTo(Floor o) {
+        if (this.getSpaceCount() == o.getSpaceCount()) {
+            return 0;
+        } else if (this.getSpaceCount() < o.getSpaceCount()) {
+            return -1;
+        } else {
+            return 1;
+        }
     }
 
 

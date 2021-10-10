@@ -11,6 +11,6 @@ public interface Space extends Comparable<Space>{
 
     public void showSpaceInformation();
 
-    public Space clone();
+    public Space clone() throws CloneNotSupportedException;
 
 }

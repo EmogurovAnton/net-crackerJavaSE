@@ -1,6 +1,6 @@
 package buildings;
 
-public interface Floor extends Space{
+public interface Floor extends Comparable<Floor>{
 
     public int getSpaceCount();
 
@@ -22,7 +22,7 @@ public interface Floor extends Space{
 
     public void showFloorInformation();
 
-    public Floor clone();
+    public Floor clone() throws CloneNotSupportedException;
 
     Iterator getIterator();
 }
