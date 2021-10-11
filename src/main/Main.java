@@ -3,13 +3,15 @@ package main;
 import buildings.*;
 import buildings.dwelling.*;
 import buildings.officeBuilding.*;
+import buildings.threads.Cleaner;
+import buildings.threads.Repairer;
 
 import java.io.*;
 import java.util.Comparator;
 
 
 public class Main {
-    public static void main(String[] args) throws CloneNotSupportedException, IOException {
+    public static void main(String[] args) throws CloneNotSupportedException, IOException, InterruptedException {
 
         Space firstFlat = new Flat(1, 3);
         Space secondFlat = new Flat(345, 1);
@@ -30,7 +32,19 @@ public class Main {
 
         Building test = new Dwelling(new Floor[]{first, fourth, third, second});
 
-        SpaceComparator spaceComparator = new SpaceComparator();
+
+        Thread repairerThread = new Repairer(first);
+        Thread cleanerThread = new Cleaner(first);
+
+        repairerThread.start();
+        cleanerThread.start();
+
+        repairerThread.interrupt();
+        cleanerThread.interrupt();
+
+
+
+        /*SpaceComparator spaceComparator = new SpaceComparator();
         FloorComparator floorComparator = new FloorComparator();
 
         System.out.println("Before");
@@ -39,7 +53,7 @@ public class Main {
         Buildings.sortDecreasing(test.getFloors(), floorComparator);
         System.out.println(test.toString());
 
-        /*System.out.println("Before");
+        System.out.println("Before");
         System.out.println(first.toString());
         System.out.println("After");
         Buildings.comparatorSortSpaces(first.getSpaces(), spaceComparator);
