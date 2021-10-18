@@ -3,8 +3,7 @@ package main;
 import buildings.*;
 import buildings.dwelling.*;
 import buildings.officeBuilding.*;
-import buildings.threads.Cleaner;
-import buildings.threads.Repairer;
+import buildings.threads.*;
 
 import java.io.*;
 import java.util.Comparator;
@@ -33,14 +32,12 @@ public class Main {
         Building test = new Dwelling(new Floor[]{first, fourth, third, second});
 
 
-        Thread repairerThread = new Repairer(first);
-        Thread cleanerThread = new Cleaner(first);
+        Semaphore sem = new Semaphore();
+        Thread sequentialRepairerThread = new Thread(new SequentalRepairer(first, sem));
+        Thread sequentialCleanerThread = new Thread(new SequentalCleaner(first, sem));
 
-        repairerThread.start();
-        cleanerThread.start();
-
-        repairerThread.interrupt();
-        cleanerThread.interrupt();
+        sequentialRepairerThread.start();
+        sequentialCleanerThread.start();
 
 
 

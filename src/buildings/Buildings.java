@@ -163,11 +163,15 @@ public class Buildings {
             for (int j = 0; j < objects.length - i - 1; j++) {
                 if (comparator.compare(objects[j], objects[j + 1]) > 0) {
                     T tempObject = objects[j];
-                    ;
                     objects[j] = objects[j + 1];
                     objects[j + 1] = tempObject;
                 }
             }
         }
+    }
+
+    //Созданание этажа, безопасного с точки зрения многопоточности
+    public static Floor synchronizedFloor(Floor floor) {
+        return new SynchronizedFloor(floor);
     }
 }
