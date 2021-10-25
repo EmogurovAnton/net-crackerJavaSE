@@ -32,12 +32,28 @@ public class Main {
         Building test = new Dwelling(new Floor[]{first, fourth, third, second});
 
 
+        Building building = Buildings.readBuilding(new FileReader("test.txt"));
+        System.out.println(building);
+        System.out.println(building.getBuildingFloorsCount());
+        System.out.println(building.getAllBuildingSpacesSquare());
+        System.out.println();
+
+        Buildings.outputBuilding(building, new FileOutputStream("tea.txt"));
+        Building bd = Buildings.inputBuilding(new FileInputStream("tea.txt"));
+        System.out.println(bd);
+
+
+
+        /*
         Semaphore sem = new Semaphore();
         Thread sequentialRepairerThread = new Thread(new SequentalRepairer(first, sem));
         Thread sequentialCleanerThread = new Thread(new SequentalCleaner(first, sem));
 
         sequentialRepairerThread.start();
-        sequentialCleanerThread.start();
+        sequentialCleanerThread.start();*/
+
+
+
 
 
 

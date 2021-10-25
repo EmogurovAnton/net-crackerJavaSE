@@ -12,8 +12,8 @@ public class Buildings {
 
     private static BuildingFactory buildingFactory = new DwellingFactory();
 
-    private void setBuildingFactory(BuildingFactory buildingFactory) {
-        this.buildingFactory = buildingFactory;
+    public static void setBuildingFactory(BuildingFactory buildingFactory) {
+        Buildings.buildingFactory = buildingFactory;
     }
 
     public static Space createSpace(int square) {
@@ -55,8 +55,6 @@ public class Buildings {
                 dos.writeInt(currentSpace.getRoomCount());
             }
         }
-        dos.close();
-        out.close();
     }
 
     //Чтение здания из байтового потока
@@ -78,8 +76,6 @@ public class Buildings {
             }
             floors[i] = createFloor(spaces);
         }
-
-        dis.close();
         return createBuilding(floors);
     }
 
