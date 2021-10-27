@@ -1,6 +1,6 @@
 package buildings.net.server.parallel;
 
-import buildings.Building;
+import interfaces.Building;
 import exceptions.BuildingUnderArrestException;
 
 import java.io.*;

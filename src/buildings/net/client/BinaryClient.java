@@ -1,6 +1,10 @@
 package buildings.net.client;
 
 import buildings.*;
+import factories.DwellingFactory;
+import factories.HotelFactory;
+import factories.OfficeFactory;
+import interfaces.Building;
 
 import java.io.*;
 import java.net.Socket;

@@ -1,4 +1,6 @@
 package buildings;
+import interfaces.Floor;
+
 import java.util.Comparator;
 
 public class FloorComparator implements Comparator<Floor> {

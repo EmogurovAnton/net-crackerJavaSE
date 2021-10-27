@@ -1,9 +1,8 @@
 package buildings.dwelling;
 
-import buildings.Collection;
-import buildings.Floor;
-import buildings.Iterator;
-import buildings.Space;
+import interfaces.Floor;
+import interfaces.Iterator;
+import interfaces.Space;
 import exceptions.SpaceIndexOutOfBoundsException;
 
 import java.io.Serializable;

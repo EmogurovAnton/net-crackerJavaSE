@@ -1,7 +1,7 @@
 package buildings.dwelling.hotel;
 
-import buildings.Floor;
-import buildings.Space;
+import interfaces.Floor;
+import interfaces.Space;
 import buildings.dwelling.DwellingFloor;
 
 public class HotelFloor extends DwellingFloor implements Floor {

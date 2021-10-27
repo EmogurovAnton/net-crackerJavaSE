@@ -2,7 +2,7 @@ package buildings.net.server.sequental;
 
 import buildings.*;
 import exceptions.BuildingUnderArrestException;
-import org.w3c.dom.ls.LSOutput;
+import interfaces.Building;
 
 import java.io.*;
 import java.net.ServerSocket;

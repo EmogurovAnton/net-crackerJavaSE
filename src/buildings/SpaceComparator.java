@@ -1,4 +1,6 @@
 package buildings;
+import interfaces.Space;
+
 import java.util.Comparator;
 
 public class SpaceComparator implements Comparator<Space> {

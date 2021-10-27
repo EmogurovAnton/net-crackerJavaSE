@@ -1,4 +1,4 @@
-package buildings;
+package interfaces;
 
 public interface Collection {
     Iterator getIterator();

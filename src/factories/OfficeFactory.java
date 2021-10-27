@@ -1,8 +1,12 @@
-package buildings;
+package factories;
 
 import buildings.officeBuilding.Office;
 import buildings.officeBuilding.OfficeBuilding;
 import buildings.officeBuilding.OfficeFloor;
+import interfaces.Building;
+import interfaces.BuildingFactory;
+import interfaces.Floor;
+import interfaces.Space;
 
 public class OfficeFactory implements BuildingFactory {
     @Override

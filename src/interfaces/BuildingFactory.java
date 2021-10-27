@@ -1,4 +1,4 @@
-package buildings;
+package interfaces;
 
 public interface BuildingFactory {
     public Space createSpace(int square);

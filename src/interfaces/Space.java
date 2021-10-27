@@ -1,4 +1,4 @@
-package buildings;
+package interfaces;
 
 public interface Space extends Comparable<Space>{
     public int getRoomCount();

@@ -3,10 +3,11 @@ package main;
 import buildings.*;
 import buildings.dwelling.*;
 import buildings.officeBuilding.*;
-import buildings.threads.*;
+import interfaces.Building;
+import interfaces.Floor;
+import interfaces.Space;
 
 import java.io.*;
-import java.util.Comparator;
 
 
 public class Main {

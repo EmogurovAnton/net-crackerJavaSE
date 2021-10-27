@@ -1,10 +1,9 @@
 package buildings.officeBuilding;
 
-import buildings.Building;
-import buildings.Floor;
-import buildings.Iterator;
-import buildings.Space;
-import buildings.dwelling.Dwelling;
+import interfaces.Building;
+import interfaces.Floor;
+import interfaces.Iterator;
+import interfaces.Space;
 import buildings.dwelling.Flat;
 import exceptions.FloorIndexOutOfBoundsException;
 

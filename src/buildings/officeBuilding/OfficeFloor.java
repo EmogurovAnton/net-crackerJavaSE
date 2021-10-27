@@ -1,10 +1,8 @@
 package buildings.officeBuilding;
 
-import buildings.Collection;
-import buildings.Floor;
-import buildings.Iterator;
-import buildings.Space;
-import buildings.dwelling.Flat;
+import interfaces.Floor;
+import interfaces.Iterator;
+import interfaces.Space;
 import exceptions.SpaceIndexOutOfBoundsException;
 
 import java.io.Serializable;

@@ -1,7 +1,7 @@
 package buildings.threads;
 
-import buildings.Floor;
-import buildings.Space;
+import interfaces.Floor;
+import interfaces.Space;
 
 public class SequentalCleaner implements Runnable {
     private Floor floor;

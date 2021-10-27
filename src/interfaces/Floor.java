@@ -1,4 +1,4 @@
-package buildings;
+package interfaces;
 
 public interface Floor extends Comparable<Floor>{
 

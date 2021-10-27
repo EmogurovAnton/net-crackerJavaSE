@@ -1,10 +1,14 @@
-package buildings;
+package factories;
 
-import buildings.dwelling.Dwelling;
-import buildings.dwelling.DwellingFloor;
 import buildings.dwelling.Flat;
+import buildings.dwelling.hotel.Hotel;
+import buildings.dwelling.hotel.HotelFloor;
+import interfaces.Building;
+import interfaces.BuildingFactory;
+import interfaces.Floor;
+import interfaces.Space;
 
-public class DwellingFactory implements BuildingFactory{
+public class HotelFactory implements BuildingFactory {
 
     @Override
     public Space createSpace(int square) {
@@ -18,21 +22,21 @@ public class DwellingFactory implements BuildingFactory{
 
     @Override
     public Floor createFloor(int spacesCount) {
-        return new DwellingFloor(spacesCount);
+        return new HotelFloor(spacesCount);
     }
 
     @Override
     public Floor createFloor(Space[] spaces) {
-        return new DwellingFloor(spaces);
+        return new HotelFloor(spaces);
     }
 
     @Override
     public Building createBuilding(int floorsCount, int[] spaceCount) {
-        return new Dwelling(floorsCount, spaceCount);
+        return new Hotel(floorsCount, spaceCount);
     }
 
     @Override
     public Building createBuilding(Floor[] floors) {
-        return new Dwelling(floors);
+        return new Hotel(floors);
     }
 }

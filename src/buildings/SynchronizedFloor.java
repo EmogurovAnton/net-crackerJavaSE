@@ -1,6 +1,10 @@
 package buildings;
 
-public class SynchronizedFloor implements Floor{
+import interfaces.Floor;
+import interfaces.Iterator;
+import interfaces.Space;
+
+public class SynchronizedFloor implements Floor {
     private Floor floor;
 
     public SynchronizedFloor(Floor floor){

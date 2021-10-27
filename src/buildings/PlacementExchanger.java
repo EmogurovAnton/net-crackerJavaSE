@@ -2,6 +2,9 @@ package buildings;
 
 import exceptions.UnexchangeableFloorsException;
 import exceptions.UnexchangeableSpacesException;
+import interfaces.Building;
+import interfaces.Floor;
+import interfaces.Space;
 
 public class PlacementExchanger {
 

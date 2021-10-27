@@ -1,7 +1,6 @@
 package buildings.net.server.sequental;
 
-import buildings.Building;
-import buildings.Buildings;
+import interfaces.Building;
 import exceptions.BuildingUnderArrestException;
 
 import java.io.*;

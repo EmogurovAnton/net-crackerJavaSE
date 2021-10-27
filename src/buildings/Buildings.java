@@ -1,12 +1,13 @@
 package buildings;
 
-import buildings.dwelling.Dwelling;
-import buildings.dwelling.DwellingFloor;
-import buildings.dwelling.Flat;
+import factories.DwellingFactory;
+import interfaces.Building;
+import interfaces.BuildingFactory;
+import interfaces.Floor;
+import interfaces.Space;
 
 import java.io.*;
 import java.util.Comparator;
-import java.util.concurrent.ExecutionException;
 
 
 public class Buildings {
@@ -60,12 +61,12 @@ public class Buildings {
     }
 
     //Создание объекта с помощью фабрики
-    public static Floor createFloor(Space[] spaces) {
+    public static Floor createFloor(Space...spaces) {
         return buildingFactory.createFloor(spaces);
     }
 
     //Создание объекта с помощью рефлексии
-    public static Floor createFloor(Space[] spaces, Class<? extends Floor> floorClass) {
+    public static Floor createFloor(Class<? extends Floor> floorClass, Space...spaces) {
         try {
             return floorClass.getConstructor(Space[].class).newInstance(spaces);
         } catch (Exception exception) {
@@ -74,12 +75,12 @@ public class Buildings {
     }
 
     //Создание объекта с помощью фабрики
-    public static Building createBuilding(int floorsCount, int[] spaceCount) {
+    public static Building createBuilding(int floorsCount, int...spaceCount) {
         return buildingFactory.createBuilding(floorsCount, spaceCount);
     }
 
     //Создание объекта с помощью рефлексии
-    public static Building createBuilding(int floorsCount, int[] spaceCount, Class<? extends Building> buildingClass) {
+    public static Building createBuilding(int floorsCount, Class<? extends Building> buildingClass, int...spaceCount) {
         try {
             return buildingClass.getConstructor(Integer.TYPE, int[].class).newInstance(floorsCount, spaceCount);
         } catch (Exception exception) {
@@ -88,12 +89,12 @@ public class Buildings {
     }
 
     //Создание объекта с помощью фабрики
-    public static Building createBuilding(Floor[] floors) {
+    public static Building createBuilding(Floor...floors) {
         return buildingFactory.createBuilding(floors);
     }
 
     //Создание объекта с помощью рефлексии
-    public static Building createBuilding(Floor[] floors, Class<? extends Building> buildingClass) {
+    public static Building createBuilding(Class<? extends Building> buildingClass, Floor...floors) {
         try {
             return buildingClass.getConstructor(Floor[].class).newInstance(floors);
         } catch (Exception exception) {
@@ -161,9 +162,9 @@ public class Buildings {
 
                 spaces[j] = createSpace(spaceSquare, spaceRoomCount, spaceClass);
             }
-            floors[i] = createFloor(spaces, floorClass);
+            floors[i] = createFloor(floorClass, spaces);
         }
-        return createBuilding(floors, buildingClass);
+        return createBuilding(buildingClass, floors);
     }
 
     //Запись здания в символьный поток
@@ -232,9 +233,9 @@ public class Buildings {
                 int roomCount = (int) st.nval;
                 spaces[j] = createSpace(square, roomCount, spaceClass);
             }
-            floors[i] = createFloor(spaces, floorClass);
+            floors[i] = createFloor(floorClass, spaces);
         }
-        return createBuilding(floors, buildingClass);
+        return createBuilding(buildingClass, floors);
     }
 
     //Сериализация здания

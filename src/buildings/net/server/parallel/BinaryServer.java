@@ -1,6 +1,6 @@
 package buildings.net.server.parallel;
 
-import buildings.Building;
+import interfaces.Building;
 import buildings.Buildings;
 import exceptions.BuildingUnderArrestException;
 
