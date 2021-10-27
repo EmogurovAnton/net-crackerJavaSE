@@ -6,6 +6,7 @@ import buildings.dwelling.Flat;
 
 import java.io.*;
 import java.util.Comparator;
+import java.util.concurrent.ExecutionException;
 
 
 public class Buildings {
@@ -16,28 +17,88 @@ public class Buildings {
         Buildings.buildingFactory = buildingFactory;
     }
 
+    //Создание объекта с помощью фабрики
     public static Space createSpace(int square) {
         return buildingFactory.createSpace(square);
     }
 
+    //Создание объекта с помощью рефлексии
+    public static Space createSpace(int square, Class<? extends Space> spaceClass) {
+        try {
+            return spaceClass.getConstructor(Integer.TYPE).newInstance(square);
+        } catch (Exception ex) {
+            throw new IllegalArgumentException();
+        }
+    }
+
+    //Создание объекта с помощью фабрики
     public static Space createSpace(int square, int roomCount) {
         return buildingFactory.createSpace(square, roomCount);
     }
 
+    //Создание объекта с помощью рефлексии
+    public static Space createSpace(int square, int roomCount, Class<? extends Space> spaceClass) {
+        try {
+            return spaceClass.getConstructor(Integer.TYPE, Integer.TYPE).newInstance(square, roomCount);
+        } catch (Exception exception) {
+            throw new IllegalArgumentException();
+        }
+    }
+
+    //Создание объекта с помощью фабрики
     public static Floor createFloor(int spacesCount) {
         return buildingFactory.createFloor(spacesCount);
     }
 
+    //Создание объекта с помощтю рефлексии
+    public static Floor createFloor(int spaceCount, Class<? extends Floor> floorClass) {
+        try {
+            return floorClass.getConstructor(Integer.TYPE).newInstance(spaceCount);
+        } catch (Exception exception) {
+            throw new IllegalArgumentException();
+        }
+    }
+
+    //Создание объекта с помощью фабрики
     public static Floor createFloor(Space[] spaces) {
         return buildingFactory.createFloor(spaces);
     }
 
+    //Создание объекта с помощью рефлексии
+    public static Floor createFloor(Space[] spaces, Class<? extends Floor> floorClass) {
+        try {
+            return floorClass.getConstructor(Space[].class).newInstance(spaces);
+        } catch (Exception exception) {
+            throw new IllegalArgumentException();
+        }
+    }
+
+    //Создание объекта с помощью фабрики
     public static Building createBuilding(int floorsCount, int[] spaceCount) {
         return buildingFactory.createBuilding(floorsCount, spaceCount);
     }
 
+    //Создание объекта с помощью рефлексии
+    public static Building createBuilding(int floorsCount, int[] spaceCount, Class<? extends Building> buildingClass) {
+        try {
+            return buildingClass.getConstructor(Integer.TYPE, int[].class).newInstance(floorsCount, spaceCount);
+        } catch (Exception exception) {
+            throw new IllegalArgumentException();
+        }
+    }
+
+    //Создание объекта с помощью фабрики
     public static Building createBuilding(Floor[] floors) {
         return buildingFactory.createBuilding(floors);
+    }
+
+    //Создание объекта с помощью рефлексии
+    public static Building createBuilding(Floor[] floors, Class<? extends Building> buildingClass) {
+        try {
+            return buildingClass.getConstructor(Floor[].class).newInstance(floors);
+        } catch (Exception exception) {
+            throw new IllegalArgumentException();
+        }
     }
 
 
@@ -57,7 +118,8 @@ public class Buildings {
         }
     }
 
-    //Чтение здания из байтового потока
+
+    //Чтение здания из байтового потока (фабрика)
     public static Building inputBuilding(InputStream in) throws IOException {
         DataInputStream dis = new DataInputStream(in);
 
@@ -77,6 +139,31 @@ public class Buildings {
             floors[i] = createFloor(spaces);
         }
         return createBuilding(floors);
+    }
+
+    //Чтение здания из байтового потока (рефлексия)
+    public static Building inputBuilding(InputStream in,
+                                         Class<? extends Building> buildingClass,
+                                         Class<? extends Floor> floorClass,
+                                         Class<? extends Space> spaceClass) throws IOException {
+        DataInputStream dis = new DataInputStream(in);
+
+        int floorCount = dis.readInt();
+        Floor[] floors = new Floor[floorCount];
+
+        for (int i = 0; i < floorCount; i++) {
+            int floorSpacesCount = dis.readInt();
+            Space[] spaces = new Space[floorSpacesCount];
+
+            for (int j = 0; j < floorSpacesCount; j++) {
+                int spaceSquare = dis.readInt();
+                int spaceRoomCount = dis.readInt();
+
+                spaces[j] = createSpace(spaceSquare, spaceRoomCount, spaceClass);
+            }
+            floors[i] = createFloor(spaces, floorClass);
+        }
+        return createBuilding(floors, buildingClass);
     }
 
     //Запись здания в символьный поток
@@ -101,7 +188,7 @@ public class Buildings {
         }
     }
 
-    //Чтение здание из символьного потока
+    //Чтение здание из символьного потока (фабрика)
     public static Building readBuilding(Reader in) throws IOException {
         StreamTokenizer st = new StreamTokenizer(in);
         st.nextToken();
@@ -124,6 +211,31 @@ public class Buildings {
         return createBuilding(floors);
     }
 
+    //Чтение здание из символьного потока (рефлексия)
+    public static Building readBuilding(Reader in,
+                                        Class<? extends Building> buildingClass,
+                                        Class<? extends Floor> floorClass,
+                                        Class<? extends Space> spaceClass) throws IOException {
+        StreamTokenizer st = new StreamTokenizer(in);
+        st.nextToken();
+        int floorCount = (int) st.nval;
+        Floor[] floors = new Floor[floorCount];
+
+        for (int i = 0; i < floorCount; i++) {
+            st.nextToken();
+            int currentFloorSpaceCount = (int) st.nval;
+            Space[] spaces = new Space[currentFloorSpaceCount];
+            for (int j = 0; j < currentFloorSpaceCount; j++) {
+                st.nextToken();
+                int square = (int) st.nval;
+                st.nextToken();
+                int roomCount = (int) st.nval;
+                spaces[j] = createSpace(square, roomCount, spaceClass);
+            }
+            floors[i] = createFloor(spaces, floorClass);
+        }
+        return createBuilding(floors, buildingClass);
+    }
 
     //Сериализация здания
     public static void serializeBuilding(Building building, OutputStream out) throws IOException {

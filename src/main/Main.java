@@ -29,10 +29,14 @@ public class Main {
         Floor third = new DwellingFloor(spaces2);
         Floor fourth = new DwellingFloor(spaces3);
 
-        Building test = new Dwelling(new Floor[]{first, fourth, third, second});
+        Reader reader = new FileReader("src/buildings/net/BuildingInformation");
+        Building test = Buildings.readBuilding(reader, Dwelling.class, DwellingFloor.class, Office.class);
+        System.out.println(test);
 
 
-        Building building = Buildings.readBuilding(new FileReader("test.txt"));
+
+
+       /* Building building = Buildings.readBuilding(new FileReader("test.txt"));
         System.out.println(building);
         System.out.println(building.getBuildingFloorsCount());
         System.out.println(building.getAllBuildingSpacesSquare());
@@ -40,7 +44,7 @@ public class Main {
 
         Buildings.outputBuilding(building, new FileOutputStream("tea.txt"));
         Building bd = Buildings.inputBuilding(new FileInputStream("tea.txt"));
-        System.out.println(bd);
+        System.out.println(bd);*/
 
 
 
